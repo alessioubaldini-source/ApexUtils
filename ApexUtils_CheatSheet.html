@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ApexUtils — Developer Cheat Sheet</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="ApexUtils_CheatSheet.css" />
+    <script src="ApexUtils_CheatSheet.js" defer></script>
+  </head>
+  <body>
+    <!-- ── HEADER ──────────────────────────────────────────────────── -->
+    <header>
+      <div class="header-top">
+        <div class="header-left">
+          <div class="header-badge">Oracle APEX · JavaScript Utility Module</div>
+          <h1>
+            ApexUtils
+            <span class="ver">Advanced Edition</span>
+          </h1>
+          <p class="header-desc">
+            La libreria nasce per risolvere una sfida comune nei team di sviluppo APEX focalizzati sul database: colmare il divario cognitivo tra la programmazione procedurale sincrona (tipica di PL/SQL) e la natura asincrona, event-driven e
+            client-side del browser web.
+          </p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="search-box">
+          <span class="search-icon-symbol">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Cerca funzione, parametro o descrizione..." />
+        </div>
+
+        <div class="section-legend">
+          <button type="button" class="legend-item active" data-filter="all">Tutti</button>
+          <button type="button" class="legend-item" data-filter="ig">
+            <div class="legend-dot" style="background: #1d5096"></div>
+            A · IG
+          </button>
+          <button type="button" class="legend-item" data-filter="ajax">
+            <div class="legend-dot" style="background: #1a4a37"></div>
+            B · Ajax
+          </button>
+          <button type="button" class="legend-item" data-filter="form">
+            <div class="legend-dot" style="background: #4a3010"></div>
+            C · Form
+          </button>
+          <button type="button" class="legend-item" data-filter="nav">
+            <div class="legend-dot" style="background: #3a2050"></div>
+            C2 · Nav
+          </button>
+          <button type="button" class="legend-item" data-filter="ui">
+            <div class="legend-dot" style="background: #50102a"></div>
+            D · UI
+          </button>
+          <button type="button" class="legend-item" data-filter="val">
+            <div class="legend-dot" style="background: #103a3a"></div>
+            E · Val
+          </button>
+          <button type="button" class="legend-item" data-filter="store">
+            <div class="legend-dot" style="background: #3a3a10"></div>
+            F · Store
+          </button>
+          <button type="button" class="legend-item" data-filter="debug">
+            <div class="legend-dot" style="background: #3a1515"></div>
+            G · Debug
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── CHEAT SHEET GRID ─────────────────────────────────────────── -->
+    <div class="sheet">
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE A: INTERACTIVE GRID                                  -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section wide ig">
+        <div class="section-header">
+          <div class="section-icon">⊞</div>
+          <span class="section-title">A · Interactive Grid — Lettura &amp; Accesso</span>
+          <span class="section-count">7 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 18%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 38%">Parametri</th>
+              <th style="width: 14%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">getIgWidget()</span></td>
+              <td class="fn-desc">Recupera l'oggetto widget jQuery UI della griglia (punto di ingresso)</td>
+              <td class="params"><span class="param-name">staticId</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-obj">Object|null</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">getIgSelectedIds()</span></td>
+              <td class="fn-desc">Restituisce array delle Primary Key delle righe selezionate</td>
+              <td class="params"><span class="param-name">staticId</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-arr">String[]</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">getIgSelectedRecords()</span></td>
+              <td class="fn-desc">Restituisce record selezionati in struttura nativa raw APEX</td>
+              <td class="params"><span class="param-name">staticId</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-arr">Array[]</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">getIgRecordsData()</span></td>
+              <td class="fn-desc">Motore di query principale: estrae dati come array di oggetti JSON puliti</td>
+              <td class="params">
+                <span class="param-name">staticId</span> <span class="param-type">String</span><br />
+                <span class="param-name">options</span> <span class="param-type">Object</span> <span class="param-opt">[opt]</span>
+                <span class="tooltip-trigger">
+                  <span class="tooltip-icon">i</span>
+                  <div class="tooltip-content">
+                    <strong style="color: var(--text); font-size: 11px; display: block; margin-bottom: 6px">Struttura Oggetto Options:</strong>
+                    <ul style="list-style: none; margin: 0; padding: 0; color: var(--text-muted); font-size: 11px; line-height: 1.5">
+                      <li>• <code style="color: var(--accent-orange)">mode</code>: 'all' | 'selected' | 'modified'</li>
+                      <li>• <code style="color: var(--accent-orange)">columns</code>: Array colonne da estrarre</li>
+                      <li>• <code style="color: var(--accent-orange)">startIndex</code>: Indice di partenza (solo mode 'all')</li>
+                      <li>• <code style="color: var(--accent-orange)">raw</code>: <span style="color: var(--accent-purple)">true</span> per record nativi, <span style="color: var(--accent-purple)">false</span> per oggetti JS</li>
+                      <li>• <code style="color: var(--accent-orange)">filter</code>: Funzione di callback per filtro custom</li>
+                    </ul>
+                  </div>
+                </span>
+              </td>
+              <td><span class="ret ret-arr">Object[]</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">iterateIgRecords()</span></td>
+              <td class="fn-desc">Itera ogni riga della griglia eseguendo callback riga per riga</td>
+              <td class="params">
+                <span class="param-name">staticId</span> <span class="param-type">String</span><br />
+                <span class="param-name">callback</span> <span class="param-type">Function(record, index, id, model)</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">getIgRowsSelectionForAjax()</span></td>
+              <td class="fn-desc">Traspone righe selezionate in vettori colonnari f01…fN legacy APEX</td>
+              <td class="params">
+                <span class="param-name">pRegion</span> <span class="param-type">String</span><br />
+                <span class="param-name">pColumns</span> <span class="param-type">String[]</span>
+              </td>
+              <td><span class="ret ret-obj">Object|null</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">isIgColumnLOV()</span></td>
+              <td class="fn-desc">Controlla se una colonna è supportata da List of Values (LOV)</td>
+              <td class="params">
+                <span class="param-name">dataModel</span> <span class="param-type">Object</span><br />
+                <span class="param-name">columnName</span> <span class="param-type">String</span>
+              </td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- IG: Controllo & Stato -->
+      <div class="section ig">
+        <div class="section-header">
+          <div class="section-icon">⊞</div>
+          <span class="section-title">A · Interactive Grid — Stato &amp; Controllo</span>
+          <span class="section-count">7 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 26%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 14%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">saveIg()</span></td>
+              <td class="fn-desc">Forza il salvataggio nativo (COMMIT) della griglia verso il DB</td>
+              <td class="params"><span class="param-name">staticId</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">refreshIg()</span></td>
+              <td class="fn-desc">Invalida cache e forza requery dal database per una IG</td>
+              <td class="params"><span class="param-name">staticId</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">refreshRegions()</span></td>
+              <td class="fn-desc">Aggiorna più regioni con delay scaglionato (200ms) tramite Promise</td>
+              <td class="params"><span class="param-name">idArray</span> <span class="param-type">String[]</span></td>
+              <td><span class="ret ret-promise">Promise</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">isIgChanged()</span></td>
+              <td class="fn-desc">Verifica se esistono modifiche DML non salvate nella cache locale</td>
+              <td class="params"><span class="param-name">pRegion</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">toggleIgInsert()</span></td>
+              <td class="fn-desc">Abilita/Disabilita i privilegi di inserimento righe a runtime</td>
+              <td class="params">
+                <span class="param-name">pRegion</span> <span class="param-type">String</span><br />
+                <span class="param-name">pAbi</span> <span class="param-type">Boolean|String</span><br />
+                <span class="param-name">pTree</span> <span class="param-type">Boolean</span> <span class="param-opt">[opt]</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">syncIgSelectedRecords()</span></td>
+              <td class="fn-desc">Risincronizza chirurgicamente record selezionati dal DB senza full refresh</td>
+              <td class="params">
+                <span class="param-name">staticId</span> <span class="param-type">String</span><br />
+                <span class="param-name">pRecords</span> <span class="param-type">Array</span> <span class="param-opt">[opt]</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">getIgEventRecordValue()</span></td>
+              <td class="fn-desc">Estrae valore scalare sicuro da evento IG, gestendo LOV e null</td>
+              <td class="params">
+                <span class="param-name">pThis</span> <span class="param-type">Object</span><br />
+                <span class="param-name">pColumn</span> <span class="param-type">String</span><br />
+                <span class="param-name">pOnlyCode</span> <span class="param-type">Boolean</span> <span class="param-opt">[opt·true]</span>
+              </td>
+              <td><span class="ret ret-str">String</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE B: AJAX / SERVER                                     -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section ajax">
+        <div class="section-header">
+          <div class="section-icon">⇄</div>
+          <span class="section-title">B · AJAX / Chiamate Server</span>
+          <span class="section-count">6 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 26%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 14%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">runProcess()</span></td>
+              <td class="fn-desc">Invoca un Application Process PL/SQL in background con spinner</td>
+              <td class="params">
+                <span class="param-name">processName</span> <span class="param-type">String</span><br />
+                <span class="param-name">params</span> <span class="param-type">Object</span> <span class="param-opt">[opt]</span><br />
+                <span class="param-name">loadingTarget</span> <span class="param-type">String</span> <span class="param-opt">[opt]</span>
+              </td>
+              <td><span class="ret ret-promise">Promise</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">runSequentialProcesses()</span></td>
+              <td class="fn-desc">Esegue più processi in sequenza rigorosa (step-by-step), arresta su errore</td>
+              <td class="params">
+                <span class="param-name">tasks</span> <span class="param-type">Object[]</span> <span class="param-type">· [{name, params, onSuccess}]</span><br />
+                <span class="param-name">onFinalSuccess</span> <span class="param-type">Function(results[])</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">updateItemsFromProcess()</span></td>
+              <td class="fn-desc">Popola automaticamente item APEX dai dati JSON restituiti dal processo</td>
+              <td class="params">
+                <span class="param-name">processName</span> <span class="param-type">String</span><br />
+                <span class="param-name">itemsToSubmit</span> <span class="param-type">String|Array</span><br />
+                <span class="param-name">suppressChange</span> <span class="param-type">Boolean</span> <span class="param-opt">[opt·true]</span>
+              </td>
+              <td><span class="ret ret-promise">Promise</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">setSessionState()</span></td>
+              <td class="fn-desc">Salva variabili JS nella Session State del backend Oracle APEX</td>
+              <td class="params"><span class="param-name">itemsObj</span> <span class="param-type">Object</span> <span class="param-type">· {itemName: value}</span></td>
+              <td><span class="ret ret-promise">Promise</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">(BETA) downloadFile()</span></td>
+              <td class="fn-desc">Genera e forza il download di file binari (PDF, XLS) via processo APEX</td>
+              <td class="params">
+                <span class="param-name">processName</span> <span class="param-type">String</span><br />
+                <span class="param-name">params</span> <span class="param-type">Object</span> <span class="param-opt">[opt]</span>
+              </td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">safeSetValue()</span></td>
+              <td class="fn-desc">Imposta valore item sopprimendo eventi DA a cascata (evita loop infiniti)</td>
+              <td class="params">
+                <span class="param-name">itemName</span> <span class="param-type">String</span><br />
+                <span class="param-name">val</span> <span class="param-type">Any</span><br />
+                <span class="param-name">suppressChange</span> <span class="param-type">Boolean</span> <span class="param-opt">[opt·true]</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE C: ITEMS & FORM                                      -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section form">
+        <div class="section-header">
+          <div class="section-icon">☰</div>
+          <span class="section-title">C · Items &amp; Form</span>
+          <span class="section-count">9 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 12%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">disableItems()</span></td>
+              <td class="fn-desc">Disabilita (read-only) gli item APEX tramite selettore CSS</td>
+              <td class="params"><span class="param-name">selectors</span> <span class="param-type">String (CSS)</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">enableItems()</span></td>
+              <td class="fn-desc">Riabilita item disabilitati tramite selettore CSS</td>
+              <td class="params"><span class="param-name">selectors</span> <span class="param-type">String (CSS)</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">hideItems()</span></td>
+              <td class="fn-desc">Nasconde item e relativa label tramite selettore CSS</td>
+              <td class="params"><span class="param-name">selectors</span> <span class="param-type">String (CSS)</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">showItems()</span></td>
+              <td class="fn-desc">Rende visibili item precedentemente nascosti</td>
+              <td class="params"><span class="param-name">selectors</span> <span class="param-type">String (CSS)</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">clearItems()</span></td>
+              <td class="fn-desc">Azzera i valori degli item (sicuro per plugin complessi)</td>
+              <td class="params"><span class="param-name">selectors</span> <span class="param-type">String (CSS)</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">isFormChanged()</span></td>
+              <td class="fn-desc">Verifica se la pagina ha item modificati non ancora salvati</td>
+              <td class="params"><em style="color: var(--text-dim)">nessuno</em></td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">resetDirtyState()</span></td>
+              <td class="fn-desc">Azzera il "dirty flag" globale dopo salvataggio custom (non standard)</td>
+              <td class="params"><em style="color: var(--text-dim)">nessuno</em></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">getItemValueAsNumber()</span></td>
+              <td class="fn-desc">Converte valore item da stringa NLS europea a Number JS (1.500,20 → 1500.20)</td>
+              <td class="params"><span class="param-name">itemId</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-num">Number</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">serializeContainer()</span></td>
+              <td class="fn-desc">Serializza l'intero container (Form o IG) in un unico JSON strutturato</td>
+              <td class="params">
+                <span class="param-name">staticId</span> <span class="param-type">String</span><br />
+                <span class="param-name">mode</span> <span class="param-type">String</span> <span class="param-opt">[opt·'default']</span>
+              </td>
+              <td><span class="ret ret-obj">Object</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE C2: NAVIGAZIONE                                      -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section nav">
+        <div class="section-header">
+          <div class="section-icon">→</div>
+          <span class="section-title">C2 · Navigazione</span>
+          <span class="section-count">4 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 12%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">(BETA) callForm()</span></td>
+              <td class="fn-desc">Reindirizza verso una pagina APEX o URL esterno (stessa tab o nuova)</td>
+              <td class="params">
+                <span class="param-name">url</span> <span class="param-type">String</span><br />
+                <span class="param-name">mode</span> <span class="param-type">'same'|'new'</span> <span class="param-opt">[opt·'same']</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">(BETA) closeModalAndRefresh()</span></td>
+              <td class="fn-desc">Chiude dialog modale e aggiorna la regione nella finestra padre</td>
+              <td class="params">
+                <span class="param-name">regionStaticIdToRefresh</span> <span class="param-type">String</span> <span class="param-opt">[opt]</span><br />
+                <span class="param-name">returnValue</span> <span class="param-type">Object</span> <span class="param-opt">[opt]</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">(BETA) getUrlParam()</span></td>
+              <td class="fn-desc">Legge un parametro querystring dall'URL corrente del browser</td>
+              <td class="params"><span class="param-name">paramName</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-str">String|null</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">(BETA) redirect()</span></td>
+              <td class="fn-desc">Cambio netto di URL: sostituisce l'intera pagina corrente</td>
+              <td class="params"><span class="param-name">url</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE D: UI / UX & FEEDBACK                               -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section ui">
+        <div class="section-header">
+          <div class="section-icon">◉</div>
+          <span class="section-title">D · UI / UX &amp; Feedback</span>
+          <span class="section-count">7 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 12%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">showSuccess()</span></td>
+              <td class="fn-desc">Mostra toast di successo (auto-dismiss dopo 3s, non bloccante)</td>
+              <td class="params"><span class="param-name">msg</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">showError()</span></td>
+              <td class="fn-desc">Mostra banner di errore bloccante in cima alla pagina, scroll automatico</td>
+              <td class="params"><span class="param-name">msg</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">setFocusFirstError()</span></td>
+              <td class="fn-desc">Sposta focus e scroll al primo campo in errore nella pagina</td>
+              <td class="params"><em style="color: var(--text-dim)">nessuno</em></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">copyToClipboard()</span></td>
+              <td class="fn-desc">Copia testo negli appunti OS con fallback per browser legacy</td>
+              <td class="params"><span class="param-name">text</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">fallbackCopyToClipboard()</span></td>
+              <td class="fn-desc">Copia via execCommand (fallback legacy per HTTP non-secure)</td>
+              <td class="params"><span class="param-name">text</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">animate()</span></td>
+              <td class="fn-desc">Applica animazione CSS3 (shake/bounce/pulse) per richiamare attenzione</td>
+              <td class="params">
+                <span class="param-name">selector</span> <span class="param-type">String (CSS)</span><br />
+                <span class="param-name">type</span> <span class="param-type">String</span> <span class="param-opt">[opt·'pulse']</span><br />
+                <span class="param-name">duration</span> <span class="param-type">Number</span> <span class="param-opt">[opt·200ms]</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">setTabState()</span></td>
+              <td class="fn-desc">Abilita/Disabilita una Tab APEX (pointer-events, focus, tabindex)</td>
+              <td class="params">
+                <span class="param-name">pRegionStaticId</span> <span class="param-type">String</span><br />
+                <span class="param-name">pAbi</span> <span class="param-type">Boolean|String</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE E: VALIDAZIONI & UTILITY                             -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section val">
+        <div class="section-header">
+          <div class="section-icon">✓</div>
+          <span class="section-title">E · Validazioni &amp; Utility</span>
+          <span class="section-count">6 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 12%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">isEmpty()</span></td>
+              <td class="fn-desc">Test polimorfo di nullità: String, null, undefined, Array vuoto</td>
+              <td class="params"><span class="param-name">val</span> <span class="param-type">Any</span></td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">debounce()</span></td>
+              <td class="fn-desc">Smorzatore: esegue la funzione solo dopo N ms di inattività (throttling)</td>
+              <td class="params">
+                <span class="param-name">func</span> <span class="param-type">Function</span><br />
+                <span class="param-name">wait</span> <span class="param-type">Number (ms)</span>
+              </td>
+              <td><span class="ret ret-fn">Function</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">formatNumber()</span></td>
+              <td class="fn-desc">Formatta numero come stringa secondo format mask NLS APEX locale</td>
+              <td class="params">
+                <span class="param-name">value</span> <span class="param-type">Number</span><br />
+                <span class="param-name">formatMask</span> <span class="param-type">String</span> <span class="param-type">· es: '999G999D00'</span>
+              </td>
+              <td><span class="ret ret-str">String</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">isValidEmail()</span></td>
+              <td class="fn-desc">Valida sintassi email tramite RegExp (client-side, zero round-trip)</td>
+              <td class="params"><span class="param-name">email</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">isValidCF()</span></td>
+              <td class="fn-desc">Valida formato Codice Fiscale italiano (16 char, pattern alfanumerico)</td>
+              <td class="params"><span class="param-name">cf</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">stringToDate()</span></td>
+              <td class="fn-desc">Converte stringa 'DD/MM/YYYY' in oggetto Date JS (⚠ mese base-0)</td>
+              <td class="params"><span class="param-name">pString</span> <span class="param-type">String</span> <span class="param-type">· 'DD/MM/YYYY'</span></td>
+              <td><span class="ret ret-obj">Date</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- SEZIONE F: STORAGE + G: DEBUG                               -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section store">
+        <div class="section-header">
+          <div class="section-icon">◫</div>
+          <span class="section-title">F · Storage (LocalStorage)</span>
+          <span class="section-count">2 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 12%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">storageSet()</span></td>
+              <td class="fn-desc">Salva dato in LocalStorage con namespace per app APEX (JSON.stringify)</td>
+              <td class="params">
+                <span class="param-name">key</span> <span class="param-type">String</span><br />
+                <span class="param-name">value</span> <span class="param-type">Any</span>
+              </td>
+              <td><span class="ret ret-bool">Boolean</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">storageGet()</span></td>
+              <td class="fn-desc">Recupera dato da LocalStorage (JSON.parse), ritorna null se assente</td>
+              <td class="params"><span class="param-name">key</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-obj">Any|null</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section debug">
+        <div class="section-header">
+          <div class="section-icon">⚙</div>
+          <span class="section-title">G · Debug &amp; Tools</span>
+          <span class="section-count">6 fn</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 28%">Funzione</th>
+              <th style="width: 30%">Obiettivo</th>
+              <th style="width: 30%">Parametri</th>
+              <th style="width: 12%">Ritorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn">debug()</span></td>
+              <td class="fn-desc">Log condizionale con formattazione CSS su console (solo se isDebugOn)</td>
+              <td class="params">
+                <span class="param-name">msg</span> <span class="param-type">String</span><br />
+                <span class="param-name">data</span> <span class="param-type">Any</span> <span class="param-opt">[opt]</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">debugTimerStart()</span></td>
+              <td class="fn-desc">Avvia timer ad alta precisione identificato da label</td>
+              <td class="params"><span class="param-name">label</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">debugTimerEnd()</span></td>
+              <td class="fn-desc">Termina timer e stampa durata in ms su console</td>
+              <td class="params"><span class="param-name">label</span> <span class="param-type">String</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">logPageState()</span></td>
+              <td class="fn-desc">Dump di tutti gli item APEX della pagina su console.table</td>
+              <td class="params"><em style="color: var(--text-dim)">nessuno</em></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">visualHighlight()</span></td>
+              <td class="fn-desc">Evidenzia visivamente un nodo DOM con outline rosso (1.5s, poi reverte)</td>
+              <td class="params"><span class="param-name">selector</span> <span class="param-type">String (CSS)</span></td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn">triggerEvent()</span></td>
+              <td class="fn-desc">Innesca Custom Event jQuery per attivare Dynamic Actions registrate</td>
+              <td class="params">
+                <span class="param-name">selector</span> <span class="param-type">String</span><br />
+                <span class="param-name">eventName</span> <span class="param-type">String</span><br />
+                <span class="param-name">data</span> <span class="param-type">Any</span>
+              </td>
+              <td><span class="ret ret-void">void</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- BACKWARD COMPATIBILITY WRAPPERS                             -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="section compat">
+        <div class="section-header">
+          <div class="section-icon">⇌</div>
+          <span class="section-title">Backward Compatibility — Legacy Wrappers</span>
+          <span class="section-count">7 alias</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 36%">Nome Legacy (Global Scope)</th>
+              <th>→ Mappa a</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">cmsGetValueRecord()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.getIgEventRecordValue()</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">cmsAbiInsert()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.toggleIgInsert()</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">cmsStringToDate()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.stringToDate()</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">isColumnLOV()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.isIgColumnLOV()</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">cmsGetRowsSelection()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.getIgRowsSelectionForAjax()</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">cmsGridChanged()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.isIgChanged()</span></td>
+            </tr>
+            <tr>
+              <td><span class="fn" style="color: #94a3b8">setTabState()</span></td>
+              <td class="params">→ <span class="fn">ApexUtils.setTabState()</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <!-- ESEMPI PRO                                                   -->
+      <!-- ──────────────────────────────────────────────────────────── -->
+      <div class="examples-section">
+        <div class="examples-header">
+          <div class="section-icon" style="background: #1a1f2e; border: 1px solid #2e3650">⚡</div>
+          <span class="examples-title">Esempi Pro — Pattern Reali Oracle APEX</span>
+        </div>
+        <div class="examples-body">
+          <div class="example-block">
+            <div class="example-label">Pattern 1 · Calcolo Live (Debounce) + UI Logic</div>
+            <pre><span class="cmt">// [Input P1_VALORE] - Key Release -> Execute JS Code</span>
+<span class="kw">var</span> <span class="var-c">runCalc</span> = <span class="fn-c">ApexUtils</span>.<span class="method">debounce</span>(<span class="kw">function</span>() {
+  <span class="fn-c">ApexUtils</span>.<span class="method">runProcess</span>(<span class="str">'CALCOLA_KPI'</span>, {
+    <span class="prop">val</span>: $<span class="method">v</span>(<span class="str">'P1_VALORE'</span>)
+  }).<span class="method">then</span>(<span class="kw">function</span>(<span class="var-c">res</span>) {
+    <span class="cmt">// Output su item</span>
+    <span class="fn-c">ApexUtils</span>.<span class="method">safeSetValue</span>(<span class="str">'P1_RISULTATO'</span>, <span class="var-c">res</span>.<span class="prop">score</span>);
+
+    <span class="cmt">// Logica UI condizionale</span>
+    <span class="kw">if</span> (<span class="var-c">res</span>.<span class="prop">valid</span>) {
+      <span class="fn-c">ApexUtils</span>.<span class="method">enableItems</span>(<span class="str">'#btnConferma'</span>);
+      <span class="fn-c">ApexUtils</span>.<span class="method">debug</span>(<span class="str">'Valore valido: '</span> + <span class="var-c">res</span>.<span class="prop">score</span>);
+    } <span class="kw">else</span> {
+      <span class="fn-c">ApexUtils</span>.<span class="method">disableItems</span>(<span class="str">'#btnConferma'</span>);
+      <span class="fn-c">ApexUtils</span>.<span class="method">debug</span>(<span class="var-c">res</span>.<span class="prop">error_msg</span>);
+    }
+  });
+}, <span class="num">300</span>);
+</pre>
+          </div>
+
+          <div class="example-block">
+            <div class="example-label">Pattern 2 · Update Items & Sync Grid</div>
+            <pre><span class="cmt">// [Button "Carica Dettagli"]</span>
+<span class="fn-c">ApexUtils</span>.<span class="method">updateItemsFromProcess</span>(<span class="str">'GET_DATA_DETT'</span>, [<span class="str">'P1_ID'</span>])
+  .<span class="method">then</span>(<span class="kw">function</span>() {
+    <span class="cmt">// Items popolati (P1_NOME, P1_STATUS...)</span>
+
+    <span class="cmt">// Sincronizza riga master per riflettere modifiche</span>
+    <span class="fn-c">ApexUtils</span>.<span class="method">syncIgSelectedRecords</span>(<span class="str">'MASTER_IG'</span>);
+
+    <span class="fn-c">ApexUtils</span>.<span class="method">debug</span>(<span class="str">'Dati aggiornati'</span>);
+  });</pre>
+          </div>
+
+          <div class="example-block">
+            <div class="example-label">Pattern 3 · Workflow Sequenziale + Refresh UI</div>
+            <pre><span class="cmt">// [Button "Esegui Chiusura"]</span>
+<span class="fn-c">ApexUtils</span>.<span class="method">runSequentialProcesses</span>([
+  { <span class="prop">name</span>: <span class="str">'STEP_1_VALIDA'</span> },
+  { <span class="prop">name</span>: <span class="str">'STEP_2_CALCOLA'</span> },
+  { <span class="prop">name</span>: <span class="str">'STEP_3_ARCHIVIA'</span> }
+], <span class="kw">function</span>(<span class="var-c">results</span>) {
+
+  <span class="cmt">// Refresh parallelo dashboard</span>
+  <span class="fn-c">ApexUtils</span>.<span class="method">refreshRegions</span>([<span class="str">'GRID_LOG'</span>, <span class="str">'CHART_STATS'</span>])
+    .<span class="method">then</span>(<span class="kw">function</span>() {
+      <span class="cmt">// Abilita e switch su Tab Report</span>
+      <span class="fn-c">ApexUtils</span>.<span class="method">setTabState</span>(<span class="str">'TAB_REPORT'</span>, <span class="kw">true</span>);
+      
+      <span class="fn-c">ApexUtils</span>.<span class="method">debug</span>(<span class="str">'Chiusura completata!'</span>);
+    });
+});</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end .sheet -->
+
+    <!-- ── FOOTER ──────────────────────────────────────────────────── -->
+    <footer>
+      <span class="footer-note"> <span>ApexUtils</span></span>
+    </footer>
+
+    <!-- ── SNIPPET MODAL ───────────────────────────────────────────── -->
+    <div id="snippetModal" class="modal-overlay">
+      <div class="modal-container">
+        <div class="modal-header">
+          <span class="modal-title">Esempio di utilizzo</span>
+          <button class="modal-close" id="closeModal">×</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
+    <button type="button" id="back-to-top" title="Torna su">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19V5"></path>
+        <polyline points="5 12 12 5 19 12"></polyline>
+      </svg>
+    </button>
+  </body>
+</html>
