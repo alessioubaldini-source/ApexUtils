@@ -758,138 +758,138 @@ footer {
    AGGIUNTE RESPONSIVE (MEDIA QUERIES)
       ========================================================================== */
 
-      /* ── Sotto i 1400px (Sblocco larghezza e passaggio a 2 colonne) ── */
-      @media (max-width: 1400px) {
-        body {
-            min-width: 100vw; /* Rimuove il vincolo dei 1400px */
-                overflow-x: hidden;
-                  }
-                    
-                      .sheet {
-                          grid-template-columns: 1fr 1fr; /* Passa a 2 colonne anziché 3 */
-                            }
-                              
-                                .section.wide, 
-                                  .section.full {
-                                      grid-column: span 2;
-                                        }
-                                          
-                                            .examples-section {
-                                                grid-column: span 2;
-                                                  }
-                                                    
-                                                      .examples-body {
-                                                          grid-template-columns: 1fr 1fr;
-                                                            }
-                                                              
-                                                                /* Sistema i bordi dell'esempio nella griglia a 2 colonne */
-                                                                  .example-block:nth-child(2) {
-                                                                      border-right: none;
-                                                                        }
-                                                                          .example-block:nth-child(3) {
-                                                                              grid-column: span 2;
-                                                                                  border-top: 1px solid var(--border);
-                                                                                    }
-                                                                                    }
+/* ── Sotto i 1400px (Sblocco larghezza e passaggio a 2 colonne) ── */
+@media (max-width: 1400px) {
+  body {
+    min-width: 100vw; /* Rimuove il vincolo dei 1400px */
+    overflow-x: hidden;
+  }
 
-                                                                                    /* ── Sotto i 992px (Tablet verticale) ── */
-                                                                                    @media (max-width: 992px) {
-                                                                                      .header-controls {
-                                                                                          flex-direction: column;
-                                                                                              align-items: flex-start;
-                                                                                                }
-                                                                                                  
-                                                                                                    .search-box {
-                                                                                                        width: 100%;
-                                                                                                            flex: 1 1 auto;
-                                                                                                              }
-                                                                                                              }
+  .sheet {
+    grid-template-columns: 1fr 1fr; /* Passa a 2 colonne anziché 3 */
+  }
 
-                                                                                                              /* ── Sotto i 768px (Smartphone: passaggio a colonna singola) ── */
-                                                                                                              @media (max-width: 768px) {
-                                                                                                                .sheet {
-                                                                                                                    grid-template-columns: 1fr; /* 1 singola colonna */
-                                                                                                                        padding: 16px 16px 32px;
-                                                                                                                          }
-                                                                                                                            
-                                                                                                                              .section.wide, 
-                                                                                                                                .section.full,
-                                                                                                                                  .examples-section {
-                                                                                                                                      grid-column: span 1;
-                                                                                                                                        }
+  .section.wide,
+  .section.full {
+    grid-column: span 2;
+  }
 
-                                                                                                                                          /* Header più compatto */
-                                                                                                                                            header {
-                                                                                                                                                padding: 16px;
-                                                                                                                                                    gap: 16px;
-                                                                                                                                                      }
-                                                                                                                                                        
-                                                                                                                                                          .header-top {
-                                                                                                                                                              flex-direction: column;
-                                                                                                                                                                  align-items: flex-start;
-                                                                                                                                                                      gap: 16px;
-                                                                                                                                                                        }
-                                                                                                                                                                          
-                                                                                                                                                                            h1 {
-                                                                                                                                                                                font-size: 22px;
-                                                                                                                                                                                    flex-wrap: wrap;
-                                                                                                                                                                                      }
+  .examples-section {
+    grid-column: span 2;
+  }
 
-                                                                                                                                                                                        /* Tabelle scorrevoli orizzontalmente per non schiacciare il testo */
-                                                                                                                                                                                          .section {
-                                                                                                                                                                                              overflow-x: auto;
-                                                                                                                                                                                                }
-                                                                                                                                                                                                  
-                                                                                                                                                                                                    table {
-                                                                                                                                                                                                        min-width: 600px; /* Forza la larghezza minima, abilitando lo scorrimento touch */
-                                                                                                                                                                                                          }
+  .examples-body {
+    grid-template-columns: 1fr 1fr;
+  }
 
-                                                                                                                                                                                                            /* Riposizionamento Esempi */
-                                                                                                                                                                                                              .examples-body {
-                                                                                                                                                                                                                  grid-template-columns: 1fr;
-                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                      
-                                                                                                                                                                                                                        .example-block {
-                                                                                                                                                                                                                            grid-column: span 1 !important;
-                                                                                                                                                                                                                                border-right: none !important;
-                                                                                                                                                                                                                                    border-bottom: 1px solid var(--border);
-                                                                                                                                                                                                                                      }
-                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                          .example-block:last-child {
-                                                                                                                                                                                                                                              border-bottom: none;
-                                                                                                                                                                                                                                                }
+  /* Sistema i bordi dell'esempio nella griglia a 2 colonne */
+  .example-block:nth-child(2) {
+    border-right: none;
+  }
+  .example-block:nth-child(3) {
+    grid-column: span 2;
+    border-top: 1px solid var(--border);
+  }
+}
 
-                                                                                                                                                                                                                                                  /* Rendi i pulsanti di copia sempre visibili su touch */
-                                                                                                                                                                                                                                                    .copy-btn {
-                                                                                                                                                                                                                                                        opacity: 1;
-                                                                                                                                                                                                                                                            background: var(--surface);
-                                                                                                                                                                                                                                                              }
+/* ── Sotto i 992px (Tablet verticale) ── */
+@media (max-width: 992px) {
+  .header-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-                                                                                                                                                                                                                                                                /* Sistemazione Footer */
-                                                                                                                                                                                                                                                                  footer {
-                                                                                                                                                                                                                                                                      flex-direction: column;
-                                                                                                                                                                                                                                                                          gap: 16px;
-                                                                                                                                                                                                                                                                              text-align: center;
-                                                                                                                                                                                                                                                                                  padding: 16px;
-                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                    }
+  .search-box {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+}
 
-                                                                                                                                                                                                                                                                                    /* ── Sotto i 480px (Smartphone molto piccoli) ── */
-                                                                                                                                                                                                                                                                                    @media (max-width: 480px) {
-                                                                                                                                                                                                                                                                                      h1 {
-                                                                                                                                                                                                                                                                                          font-size: 18px;
-                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                                                                                                                .section-legend {
-                                                                                                                                                                                                                                                                                                    justify-content: center; /* Centra i bottoni dei filtri */
-                                                                                                                                                                                                                                                                                                      }
-                                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                                          .legend-item {
-                                                                                                                                                                                                                                                                                                              font-size: 10px;
-                                                                                                                                                                                                                                                                                                                  padding: 5px 8px;
-                                                                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                                                                      
-                                                                                                                                                                                                                                                                                                                        .modal-container {
-                                                                                                                                                                                                                                                                                                                            width: 95%;
-                                                                                                                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                                                                                                                              }
+/* ── Sotto i 768px (Smartphone: passaggio a colonna singola) ── */
+@media (max-width: 768px) {
+  .sheet {
+    grid-template-columns: 1fr; /* 1 singola colonna */
+    padding: 16px 16px 32px;
+  }
+
+  .section.wide,
+  .section.full,
+  .examples-section {
+    grid-column: span 1;
+  }
+
+  /* Header più compatto */
+  header {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+    flex-wrap: wrap;
+  }
+
+  /* Tabelle scorrevoli orizzontalmente per non schiacciare il testo */
+  .section {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px; /* Forza la larghezza minima, abilitando lo scorrimento touch */
+  }
+
+  /* Riposizionamento Esempi */
+  .examples-body {
+    grid-template-columns: 1fr;
+  }
+
+  .example-block {
+    grid-column: span 1 !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .example-block:last-child {
+    border-bottom: none;
+  }
+
+  /* Rendi i pulsanti di copia sempre visibili su touch */
+  .copy-btn {
+    opacity: 1;
+    background: var(--surface);
+  }
+
+  /* Sistemazione Footer */
+  footer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    padding: 16px;
+  }
+}
+
+/* ── Sotto i 480px (Smartphone molto piccoli) ── */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 18px;
+  }
+
+  .section-legend {
+    justify-content: center; /* Centra i bottoni dei filtri */
+  }
+
+  .legend-item {
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  .modal-container {
+    width: 95%;
+  }
+}

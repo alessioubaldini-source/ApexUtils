@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ApexUtils — Developer Cheat Sheet</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
@@ -796,6 +797,44 @@
       <span class="fn-c">ApexUtils</span>.<span class="method">debug</span>(<span class="str">'Chiusura completata!'</span>);
     });
 });</pre>
+          </div>
+
+          <div class="example-block">
+            <div class="example-label">Pattern 4 · Mappatura colonna IG → Page Item</div>
+            <pre><span class="cmt">// Mappatura: Colonna IG -> Item di Pagina</span>
+<span class="kw">const</span> <span class="var-c">mapping</span> = {
+  <span class="str">"TC033_T_MOD_LIQ_CPI"</span>:          <span class="str">"P4037_C_MOD_LIQ_CPI_INF"</span>,
+  <span class="str">"TC033_T_TRC"</span>:                  <span class="str">"P4037_T_TRC_INF"</span>,
+  <span class="str">"TC033_C_COD_ACC_SUP"</span>:          <span class="str">"P4037_C_COD_ACC_SUP_INF"</span>,
+  <span class="str">"TC033_C_COD_CND_RIG_ACC_SUP"</span>:  <span class="str">"P4037_C_COD_CND_RIG_ACC_SUP_INF"</span>,
+  <span class="str">"TC033_T_NOT"</span>:                  <span class="str">"P4037_T_NOT_INF"</span>,
+  <span class="str">"TC033_T_OPE_SGL_CPI"</span>:          <span class="str">"P4037_INF_T_OPE_SGL_INF"</span>,
+  <span class="str">"TC033_C_OPE_SGL_CPI"</span>:          <span class="str">"P4037_INF_C_OPE_SGL_INF"</span>,
+  <span class="str">"TC033_T_OPE_SGL_CPI_SUP"</span>:      <span class="str">"P4037_INF_T_OPE_SGL_CPI_SUP"</span>,
+  <span class="str">"TC033_C_OPE_SGL_CPI_SUP"</span>:      <span class="str">"P4037_INF_C_OPE_SGL_CPI_SUP"</span>,
+  <span class="str">"TC033_C_TIP_DOC"</span>:              <span class="str">"P4037_C_TIP_DOC_INF"</span>,
+  <span class="str">"TC033_C_PER_LIQ"</span>:              <span class="str">"P4037_C_PER_LIQ_CMS"</span>,
+  <span class="str">"TC033_C_PER_LIQ_CPI"</span>:          <span class="str">"P4037_C_PER_LIQ_CPI"</span>,
+  <span class="str">"TC033_N_VAL_SGL_INF"</span>:          <span class="str">"P4037_INF_N_VAL_SGL_INF"</span>,
+  <span class="str">"TC033_N_VAL_SGL_SUP"</span>:          <span class="str">"P4037_INF_N_VAL_SGL_SUP"</span>,
+  <span class="str">"TC033_T_UNI_MIS_CPI"</span>:          <span class="str">"P4037_INF_C_UNI_MIS_SGL"</span>,
+  <span class="str">"C_COD_CND_RIG_ACC"</span>:            <span class="str">"P4037_C_COD_CND_RIG_ACC"</span>
+};
+
+<span class="cmt">// Itera sulla mappa per recuperare i valori dalla griglia e impostarli negli item</span>
+<span class="kw">for</span> (<span class="kw">const</span> [<span class="var-c">columnName</span>, <span class="var-c">itemName</span>] of <span class="kw">Object</span>.<span class="method">entries</span>(<span class="var-c">mapping</span>)) {
+  <span class="cmt">// Recupera il valore.</span>
+  <span class="cmt">// getIgEventRecordValue estrae correttamente il valore '.v' se è una LOV (pOnlyCode=true di default)</span>
+  <span class="kw">let</span> <span class="var-c">val</span> = <span class="fn-c">ApexUtils</span>.<span class="method">getIgEventRecordValue</span>(<span class="kw">this</span>, <span class="var-c">columnName</span>);
+  
+  <span class="cmt">// Imposta il valore in modo sicuro (gestisce null e sopprime eventi change)</span>
+  <span class="fn-c">ApexUtils</span>.<span class="method">safeSetValue</span>(<span class="var-c">itemName</span>, <span class="var-c">val</span>);
+}
+
+<span class="cmt">// Esegue il refresh della griglia TC054 con un ritardo di 300ms</span>
+<span class="kw">setTimeout</span>(() => {
+  <span class="fn-c">ApexUtils</span>.<span class="method">refreshIg</span>(<span class="str">"TC054"</span>);
+}, <span class="num">300</span>);</pre>
           </div>
         </div>
       </div>
