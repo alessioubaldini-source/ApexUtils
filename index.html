@@ -413,13 +413,26 @@
           </thead>
           <tbody>
             <tr>
-              <td><span class="fn">(BETA) callForm()</span></td>
-              <td class="fn-desc">Reindirizza verso una pagina APEX o URL esterno (stessa tab o nuova)</td>
+              <td><span class="fn">callForm()</span></td>
+              <td class="fn-desc">Naviga verso una pagina APEX calcolando l'URL in modo sicuro lato server</td>
               <td class="params">
-                <span class="param-name">url</span> <span class="param-type">String</span><br />
-                <span class="param-name">mode</span> <span class="param-type">'same'|'new'</span> <span class="param-opt">[opt·'same']</span>
+                <span class="param-name">pageId</span> <span class="param-type">String|Num</span><br />
+                <span class="param-name">parameters</span> <span class="param-type">Object</span> <span class="param-opt">[opt]</span><br />
+                <span class="param-name">options</span> <span class="param-type">Object</span> <span class="param-opt">[opt]</span>
+                <span class="tooltip-trigger">
+                  <span class="tooltip-icon">i</span>
+                  <div class="tooltip-content">
+                    <strong style="color: var(--text); font-size: 11px; display: block; margin-bottom: 6px">Proprietà Options:</strong>
+                    <ul style="list-style: none; margin: 0; padding: 0; color: var(--text-muted); font-size: 11px; line-height: 1.5">
+                      <li>• <code style="color: var(--accent-orange)">mode</code>: 'new' (default) | 'same'</li>
+                      <li>• <code style="color: var(--accent-orange)">modSes</code>: Gestione sessione (default: 'CLONE')</li>
+                      <li>• <code style="color: var(--accent-orange)">clearCache</code>: Stringa ID pagine da pulire</li>
+                      <li>• <code style="color: var(--accent-orange)">resetIg</code>: <span style="color: var(--accent-purple)">true</span> per resettare le IG target</li>
+                    </ul>
+                  </div>
+                </span>
               </td>
-              <td><span class="ret ret-void">void</span></td>
+              <td><span class="ret ret-promise">Promise</span></td>
             </tr>
             <tr>
               <td><span class="fn">(BETA) closeModalAndRefresh()</span></td>

@@ -138,7 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
     serializeContainer: `var formData = ApexUtils.serializeContainer('REGION_STATIC_ID');`,
 
     // SEZIONE C2
-    callForm: [`// Caso 1: Redirect stessa finestra (o Dialog se supportato)\nApexUtils.callForm('f?p=100:2:&APP_SESSION.::::P2_ID:50');`, `// Caso 2: Nuova scheda browser\nApexUtils.callForm('f?p=100:2:&APP_SESSION.', 'new');`],
+    callForm: [
+      `// Caso 1: Navigazione base alla pagina 10 con parametri\nApexUtils.callForm(10, { P10_ID: 50, P10_MODE: 'EDIT' });`,
+      `// Caso 2: Navigazione avanzata con reset delle Interactive Grid\nApexUtils.callForm(102, { P102_MASTER: 1 }, {\n  mode: 'same',\n  clearCache: '102',\n  resetIg: true\n});`,
+    ],
     closeModalAndRefresh: `// Chiudi dialog e aggiorna la griglia padre\nApexUtils.closeModalAndRefresh('PADRE_IG');`,
     getUrlParam: `var id = ApexUtils.getUrlParam('p_id');\nif (id) console.log('ID trovato in URL:', id);`,
     redirect: `ApexUtils.redirect('f?p=APP:PAGE:SESSION');`,
