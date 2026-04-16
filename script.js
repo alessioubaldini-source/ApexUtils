@@ -157,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // SEZIONE E
     isEmpty: `if (ApexUtils.isEmpty(valore)) { return; }`,
+    isNumeric: `if (ApexUtils.isNumeric('1.500,20')) {\n  console.log('Valore numerico valido');\n}`,
     debounce: `// Esegui ricerca solo dopo 300ms di stop digitazione\n$('#search').on('keyup', ApexUtils.debounce(cercaFn, 300));`,
     formatNumber: `var str = ApexUtils.formatNumber(1500.2, '999G990D00');`,
     isValidEmail: `if (!ApexUtils.isValidEmail('test@example.com')) alert('Email errata');`,
