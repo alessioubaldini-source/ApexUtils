@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `// Caso 1: Navigazione base alla pagina 10 con parametri\nApexUtils.callForm(10, { P10_ID: 50, P10_MODE: 'EDIT' });`,
       `// Caso 2: Navigazione avanzata con reset delle Interactive Grid\nApexUtils.callForm(102, { P102_MASTER: 1 }, {\n  mode: 'same',\n  clearCache: '102',\n  resetIg: true\n});`,
     ],
+    getPreparedUrl: `ApexUtils.getPreparedUrl(10, { P10_ID: 50 }, { resetIg: true })\n  .then(function(url) {\n    console.log('URL generato con checksum:', url);\n  });`,
     closeModalAndRefresh: `// Chiudi dialog e aggiorna la griglia padre\nApexUtils.closeModalAndRefresh('PADRE_IG');`,
     getUrlParam: `var id = ApexUtils.getUrlParam('p_id');\nif (id) console.log('ID trovato in URL:', id);`,
     redirect: `ApexUtils.redirect('f?p=APP:PAGE:SESSION');`,
