@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS Selectors – Cheat Sheet</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;700;800&display=swap');
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0d0f14;
+        --surface: #13161e;
+        --surface2: #1a1e2a;
+        --border: #252a38;
+        --accent: #5eead4;
+        --accent2: #f472b6;
+        --accent3: #facc15;
+        --accent4: #818cf8;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --code-bg: #0a0c10;
+      }
+
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      body {
+        width: 100%;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Syne', sans-serif;
+        font-size: 1rem;
+        line-height: 1.4;
+        padding: 20px;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      /* ── HEADER ── */
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1.5px solid var(--accent);
+        padding-bottom: 4px;
+        margin-bottom: 7px;
+      }
+      header .title-block {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+      header h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--accent);
+        line-height: 1;
+      }
+      header .sub {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        color: var(--muted);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      header .badge {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        background: var(--accent4);
+        color: #000;
+        padding: 2px 7px;
+        border-radius: 2px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      /* ── GRID ── */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 12px;
+      }
+
+      @media (min-width: 1200px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .grid-2 {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── CARD ── */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 15px;
+        background: var(--surface2);
+        border-bottom: 1px solid var(--border);
+      }
+      .card-header .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .card-header h2 {
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .card-body {
+        padding: 12px 15px;
+      }
+
+      /* ── TABLE ── */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      td {
+        padding: 10px 8px;
+        vertical-align: top;
+        border-bottom: 1px solid #1e2330;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover td {
+        background: #171b27;
+      }
+
+      code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.95rem;
+        color: var(--accent);
+        background: var(--code-bg);
+        padding: 1px 4px;
+        border-radius: 2px;
+        white-space: nowrap;
+      }
+      code.pink {
+        color: var(--accent2);
+      }
+      code.yellow {
+        color: var(--accent3);
+      }
+      code.purple {
+        color: var(--accent4);
+      }
+      code.green {
+        color: #86efac;
+      }
+      code.orange {
+        color: #fb923c;
+      }
+
+      .desc {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        line-height: 1.3;
+      }
+
+      /* ── COMBO SECTION (special layout) ── */
+      .combo-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+      }
+      .combo-item {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 3px;
+        padding: 10px;
+      }
+      .combo-item .label {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+        font-weight: 700;
+      }
+      .combo-item code {
+        font-size: 1rem;
+        display: block;
+        background: transparent;
+        padding: 0;
+        margin-bottom: 4px;
+      }
+      .combo-item .desc {
+        font-size: 0.85rem;
+      }
+
+      /* ── SPECIFICITY BAR ── */
+      .spec-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 2.5px 0;
+        border-bottom: 1px solid #1e2330;
+      }
+      .spec-row:last-child {
+        border: none;
+      }
+      .spec-code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        color: var(--accent);
+        min-width: 90px;
+      }
+      .spec-bar-wrap {
+        flex: 1;
+        height: 5px;
+        background: #1e2330;
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .spec-bar {
+        height: 100%;
+        border-radius: 3px;
+      }
+      .spec-val {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--muted);
+        min-width: 36px;
+        text-align: right;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        margin-top: 6px;
+        border-top: 1px solid var(--border);
+        padding-top: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      footer span {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: var(--muted);
+        letter-spacing: 1px;
+      }
+
+      /* ── PRINT ── */
+      @media print {
+        body {
+          margin: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="title-block">
+        <h1>CSS SELECTORS</h1>
+        <span class="sub">Cheat Sheet · Riferimento Completo</span>
+      </div>
+      <span class="badge">CSS3 · 2025</span>
+    </header>
+
+    <div class="grid">
+      <!-- ① SELETTORI DI BASE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #5eead4"></div>
+          <h2 style="color: #5eead4">Selettori di Base</h2>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <th>Selettore</th>
+              <th>Descrizione</th>
+            </tr>
+            <tr>
+              <td><code>*</code></td>
+              <td class="desc">Tutti gli elementi (universale)</td>
+            </tr>
+            <tr>
+              <td><code>div</code></td>
+              <td class="desc">Per tipo/tag</td>
+            </tr>
+            <tr>
+              <td><code>.classe</code></td>
+              <td class="desc">Per classe</td>
+            </tr>
+            <tr>
+              <td><code>#id</code></td>
+              <td class="desc">Per ID (univoco)</td>
+            </tr>
+            <tr>
+              <td><code>[attr]</code></td>
+              <td class="desc">Ha l'attributo</td>
+            </tr>
+            <tr>
+              <td><code>[attr="val"]</code></td>
+              <td class="desc">Attributo = valore esatto</td>
+            </tr>
+            <tr>
+              <td><code>[attr~="val"]</code></td>
+              <td class="desc">Valore in lista separata da spazi</td>
+            </tr>
+            <tr>
+              <td><code>[attr|="val"]</code></td>
+              <td class="desc">Valore o valore- (es. lang|="it")</td>
+            </tr>
+            <tr>
+              <td><code>[attr^="val"]</code></td>
+              <td class="desc">Valore inizia con</td>
+            </tr>
+            <tr>
+              <td><code>[attr$="val"]</code></td>
+              <td class="desc">Valore termina con</td>
+            </tr>
+            <tr>
+              <td><code>[attr*="val"]</code></td>
+              <td class="desc">Valore contiene</td>
+            </tr>
+            <tr>
+              <td><code>[attr i]</code></td>
+              <td class="desc">Case-insensitive (flag i)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ② COMBINATORI -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #f472b6"></div>
+          <h2 style="color: #f472b6">Combinatori</h2>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <th>Sintassi</th>
+              <th>Nome</th>
+              <th>Descrizione</th>
+            </tr>
+            <tr>
+              <td><code class="pink">A B</code></td>
+              <td class="desc">Discendente</td>
+              <td class="desc">B dentro A (qualsiasi profondità)</td>
+            </tr>
+            <tr>
+              <td><code class="pink">A &gt; B</code></td>
+              <td class="desc">Figlio diretto</td>
+              <td class="desc">B figlio immediato di A</td>
+            </tr>
+            <tr>
+              <td><code class="pink">A + B</code></td>
+              <td class="desc">Adiacente</td>
+              <td class="desc">B immediatamente dopo A</td>
+            </tr>
+            <tr>
+              <td><code class="pink">A ~ B</code></td>
+              <td class="desc">Fratello generico</td>
+              <td class="desc">B fratello successivo di A</td>
+            </tr>
+            <tr>
+              <td><code class="pink">A, B</code></td>
+              <td class="desc">Lista (OR)</td>
+              <td class="desc">Seleziona sia A che B</td>
+            </tr>
+            <tr>
+              <td><code class="pink">AB</code></td>
+              <td class="desc">AND implicito</td>
+              <td class="desc">div.box → div con classe box</td>
+            </tr>
+            <tr>
+              <td><code class="pink">A || B</code></td>
+              <td class="desc">Colonna</td>
+              <td class="desc">B in colonna grid A (CSS Grid)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ③ PSEUDO-CLASSI STRUTTURALI -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #facc15"></div>
+          <h2 style="color: #facc15">Pseudo-classi Strutturali</h2>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <th>Selettore</th>
+              <th>Descrizione</th>
+            </tr>
+            <tr>
+              <td><code class="yellow">:first-child</code></td>
+              <td class="desc">Primo figlio del genitore</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:last-child</code></td>
+              <td class="desc">Ultimo figlio</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:nth-child(n)</code></td>
+              <td class="desc">n-esimo figlio (1-based)</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:nth-last-child(n)</code></td>
+              <td class="desc">n-esimo dall'ultimo</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:only-child</code></td>
+              <td class="desc">Figlio unico</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:first-of-type</code></td>
+              <td class="desc">Primo del suo tipo</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:last-of-type</code></td>
+              <td class="desc">Ultimo del suo tipo</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:nth-of-type(n)</code></td>
+              <td class="desc">n-esimo del tipo</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:only-of-type</code></td>
+              <td class="desc">Unico del suo tipo</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:empty</code></td>
+              <td class="desc">Senza figli né testo</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:root</code></td>
+              <td class="desc">Elemento radice (&lt;html&gt;)</td>
+            </tr>
+            <tr>
+              <td><code class="yellow">:scope</code></td>
+              <td class="desc">Elemento di scoping</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ④ PSEUDO-CLASSI UI/STATO -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #818cf8"></div>
+          <h2 style="color: #818cf8">Pseudo-classi UI & Stato</h2>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <th>Selettore</th>
+              <th>Descrizione</th>
+            </tr>
+            <tr>
+              <td><code class="purple">:hover</code></td>
+              <td class="desc">Mouse sopra l'elemento</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:focus</code></td>
+              <td class="desc">Elemento con focus</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:focus-within</code></td>
+              <td class="desc">Contiene un figlio con focus</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:focus-visible</code></td>
+              <td class="desc">Focus visibile da tastiera</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:active</code></td>
+              <td class="desc">Click/pressione in corso</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:visited</code></td>
+              <td class="desc">Link visitato</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:link</code></td>
+              <td class="desc">Link non visitato</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:checked</code></td>
+              <td class="desc">Input spuntato/selezionato</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:disabled</code></td>
+              <td class="desc">Elemento disabilitato</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:enabled</code></td>
+              <td class="desc">Elemento abilitato</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:required</code></td>
+              <td class="desc">Input con required</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:optional</code></td>
+              <td class="desc">Input senza required</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:valid / :invalid</code></td>
+              <td class="desc">Validazione form</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:placeholder-shown</code></td>
+              <td class="desc">Placeholder visibile</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:read-only / :read-write</code></td>
+              <td class="desc">Modalità lettura/scrittura</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:target</code></td>
+              <td class="desc">Elemento con ID = fragment URL</td>
+            </tr>
+            <tr>
+              <td><code class="purple">:any-link</code></td>
+              <td class="desc">:link OR :visited</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ⑤ PSEUDO-ELEMENTI -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #86efac"></div>
+          <h2 style="color: #86efac">Pseudo-elementi</h2>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <th>Selettore</th>
+              <th>Descrizione</th>
+            </tr>
+            <tr>
+              <td><code class="green">::before</code></td>
+              <td class="desc">Pseudo-elemento prima del contenuto</td>
+            </tr>
+            <tr>
+              <td><code class="green">::after</code></td>
+              <td class="desc">Pseudo-elemento dopo il contenuto</td>
+            </tr>
+            <tr>
+              <td><code class="green">::first-line</code></td>
+              <td class="desc">Prima riga di testo</td>
+            </tr>
+            <tr>
+              <td><code class="green">::first-letter</code></td>
+              <td class="desc">Prima lettera (capolettera)</td>
+            </tr>
+            <tr>
+              <td><code class="green">::selection</code></td>
+              <td class="desc">Testo selezionato dall'utente</td>
+            </tr>
+            <tr>
+              <td><code class="green">::placeholder</code></td>
+              <td class="desc">Testo placeholder degli input</td>
+            </tr>
+            <tr>
+              <td><code class="green">::marker</code></td>
+              <td class="desc">Marcatore di lista (li)</td>
+            </tr>
+            <tr>
+              <td><code class="green">::backdrop</code></td>
+              <td class="desc">Sfondo di &lt;dialog&gt; / fullscreen</td>
+            </tr>
+            <tr>
+              <td><code class="green">::file-selector-button</code></td>
+              <td class="desc">Pulsante input[type=file]</td>
+            </tr>
+            <tr>
+              <td><code class="green">::cue</code></td>
+              <td class="desc">Sottotitoli WebVTT (&lt;track&gt;)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ⑥ PSEUDO-CLASSI LOGICHE & AVANZATE -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #fb923c"></div>
+          <h2 style="color: #fb923c">Pseudo-classi Logiche</h2>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr>
+              <th>Selettore</th>
+              <th>Descrizione</th>
+            </tr>
+            <tr>
+              <td><code class="orange">:is(A, B)</code></td>
+              <td class="desc">Corrisponde a A o B (eredita spec. maggiore)</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:where(A, B)</code></td>
+              <td class="desc">Come :is() ma specificità 0</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:not(A)</code></td>
+              <td class="desc">Nega il selettore A</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:has(A)</code></td>
+              <td class="desc">Contiene discendente A ("parent selector")</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:lang(it)</code></td>
+              <td class="desc">Lingua dell'elemento</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:dir(ltr|rtl)</code></td>
+              <td class="desc">Direzione del testo</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:global()</code></td>
+              <td class="desc">Esce dallo scope (CSS Modules)</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:local()</code></td>
+              <td class="desc">Entra nello scope (CSS Modules)</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:defined</code></td>
+              <td class="desc">Web Component già definito</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:host</code></td>
+              <td class="desc">Shadow host (Shadow DOM)</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:host(A)</code></td>
+              <td class="desc">Shadow host che corrisponde ad A</td>
+            </tr>
+            <tr>
+              <td><code class="orange">:state(name)</code></td>
+              <td class="desc">Stato Custom Element (nuovo)</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- ⑦ COMBINAZIONI & PATTERN – wide -->
+      <div class="card grid-2">
+        <div class="card-header">
+          <div class="dot" style="background: #5eead4"></div>
+          <h2 style="color: #5eead4">Pattern & Combinazioni</h2>
+        </div>
+        <div class="card-body">
+          <div class="combo-grid">
+            <div class="combo-item">
+              <div class="label">AND (stessa classe + attributo)</div>
+              <code>input[type="text"].active</code>
+              <span class="desc">Input di tipo text E con classe active</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">OR (lista)</div>
+              <code>h1, h2, h3, h4</code>
+              <span class="desc">Tutti i titoli h1 oppure h2 oppure h3 oppure h4</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">NOT (negazione)</div>
+              <code>li:not(.active):not(:last-child)</code>
+              <span class="desc">li che non ha .active E non è ultimo figlio</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">HAS (parent selector)</div>
+              <code>section:has(> h2.title)</code>
+              <span class="desc">section che contiene un h2.title come figlio diretto</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">nth-child — formule</div>
+              <code>li:nth-child(2n+1)</code>
+              <span class="desc">Dispari · <code>2n</code> = pari · <code>3n</code> = ogni 3 · <code>-n+3</code> = primi 3</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">nth-child — parole chiave</div>
+              <code>tr:nth-child(odd) / even</code>
+              <span class="desc"><code>odd</code> = dispari · <code>even</code> = pari · <code>-n+4</code> = ultimi 4</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">Catena discendente + stato</div>
+              <code>nav > ul li a:hover</code>
+              <span class="desc">Link al hover dentro li in ul figlio diretto di nav</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">Sibling + stato form</div>
+              <code>input:checked + label</code>
+              <span class="desc">Label subito dopo input spuntato</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">Attributo multiplo (AND)</div>
+              <code>a[href][target="_blank"]</code>
+              <span class="desc">Link con href E target blank (entrambi)</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">:is() per abbreviare</div>
+              <code>:is(h1,h2,h3) > a:hover</code>
+              <span class="desc">Equivale a h1>a:hover, h2>a:hover, h3>a:hover</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">Pseudo-elemento condizionale</div>
+              <code>.btn:not(:disabled)::after</code>
+              <span class="desc">::after solo se .btn non è disabled</span>
+            </div>
+            <div class="combo-item">
+              <div class="label">Globale + generico fratello</div>
+              <code>details[open] ~ .overlay</code>
+              <span class="desc">.overlay fratello di details quando aperto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑧ SPECIFICITÀ -->
+      <div class="card">
+        <div class="card-header">
+          <div class="dot" style="background: #facc15"></div>
+          <h2 style="color: #facc15">Specificità (A-B-C)</h2>
+        </div>
+        <div class="card-body">
+          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--muted); margin-bottom: 10px">A = ID · B = Classi/Attr/Pseudo-classi · C = Elementi/Pseudo-elementi</div>
+          <div class="spec-row">
+            <span class="spec-code">!important</span>
+            <div class="spec-bar-wrap"><div class="spec-bar" style="width: 100%; background: #f87171"></div></div>
+            <span class="spec-val" style="color: #f87171">∞</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-code">style=""</span>
+            <div class="spec-bar-wrap"><div class="spec-bar" style="width: 90%; background: #fb923c"></div></div>
+            <span class="spec-val">1-0-0-0</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-code">#id</span>
+            <div class="spec-bar-wrap"><div class="spec-bar" style="width: 70%; background: #facc15"></div></div>
+            <span class="spec-val">0-1-0-0</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-code">.cls / [attr] / :ps</span>
+            <div class="spec-bar-wrap"><div class="spec-bar" style="width: 45%; background: #86efac"></div></div>
+            <span class="spec-val">0-0-1-0</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-code">tag / ::pseudo</span>
+            <div class="spec-bar-wrap"><div class="spec-bar" style="width: 20%; background: #5eead4"></div></div>
+            <span class="spec-val">0-0-0-1</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-code">* / :where()</span>
+            <div class="spec-bar-wrap"><div class="spec-bar" style="width: 3%; background: #475569"></div></div>
+            <span class="spec-val">0-0-0-0</span>
+          </div>
+          <div style="margin-top: 10px; font-size: 0.8rem; color: var(--muted); line-height: 1.5; font-family: 'JetBrains Mono', monospace">
+            <span style="color: #86efac">Nota:</span> :is(), :not(), :has() ereditano la specificità del selettore più specifico al loro interno.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /grid -->
+
+    <footer>
+      <span>CSS SELECTORS CHEAT SHEET · Tutti i selettori CSS3 e Living Standard</span>
+      <span>MDN Web Docs · caniuse.com per il supporto browser</span>
+    </footer>
+  </body>
+</html>
