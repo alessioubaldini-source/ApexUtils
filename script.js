@@ -139,8 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // SEZIONE C2
     callForm: [
-      `// Caso 1: Navigazione base alla pagina 10 con parametri\nApexUtils.callForm(10, { P10_ID: 50, P10_MODE: 'EDIT' });`,
-      `// Caso 2: Navigazione avanzata con reset delle Interactive Grid\nApexUtils.callForm(102, { P102_MASTER: 1 }, {\n  mode: 'same',\n  clearCache: '102',\n  resetIg: true\n});`,
+      `// Caso 1: Navigazione base (Nuova scheda, Sessione Clona)\nApexUtils.callForm(10, { P10_ID: 50 });`,
+      `// Caso 2: Redirect stessa pagina con reset cache e IG\nApexUtils.callForm(102, { P102_ID: 1 }, {\n  mode: 'same',\n  clearCache: '102',\n  resetIg: true\n});`,
+      `// Caso 3: Utilizzo di modSes per gestione sessione\n// 'NONE' = mantiene stessa sessione\n// 'CLEAR' = resetta session state della pagina target\nApexUtils.callForm(20, {}, { modSes: 'NONE' });`,
+      `// Caso 4: Reset Paginazione e filtri IR\nApexUtils.callForm(50, {}, { clearCache: 'RP,RIR' });`,
     ],
     getPreparedUrl: `ApexUtils.getPreparedUrl(10, { P10_ID: 50 }, { resetIg: true })\n  .then(function(url) {\n    console.log('URL generato con checksum:', url);\n  });`,
     closeModalAndRefresh: `// Chiudi dialog e aggiorna la griglia padre\nApexUtils.closeModalAndRefresh('PADRE_IG');`,
