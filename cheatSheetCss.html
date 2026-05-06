@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title>CSS Selectors – Cheat Sheet</title>
+    <script src="cheatSheetCss.js" defer></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;700;800&display=swap');
 
       *,
-      *::before,
       *::after {
         box-sizing: border-box;
         margin: 0;
@@ -83,6 +83,109 @@
         border-radius: 2px;
         font-weight: 700;
         letter-spacing: 1px;
+      }
+
+      /* ── SEARCH BOX ── */
+      .search-box {
+        position: relative;
+        margin-bottom: 20px;
+      }
+      .search-input {
+        width: 100%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 12px 12px 12px 40px;
+        border-radius: 4px;
+        color: var(--text);
+        font-family: 'JetBrains Mono', monospace;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .search-input:focus {
+        border-color: var(--accent);
+      }
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+      }
+
+      /* ── PLAYGROUND ── */
+      .playground-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .tester-input {
+        background: var(--code-bg);
+        border: 1px solid var(--accent);
+        padding: 10px;
+        color: var(--accent);
+        font-family: 'JetBrains Mono', monospace;
+        border-radius: 4px;
+        width: 100%;
+      }
+      .dom-preview {
+        background: #1e2330;
+        padding: 15px;
+        border-radius: 4px;
+        border: 1px dashed var(--muted);
+      }
+      .dom-preview * {
+        padding: 4px;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+      }
+      .dom-preview .highlight {
+        background: rgba(94, 234, 212, 0.2);
+        border-color: var(--accent);
+        box-shadow: 0 0 8px rgba(94, 234, 212, 0.3);
+      }
+      .dom-preview ul {
+        margin-left: 20px;
+      }
+
+      /* ── BUILDER ── */
+      .builder-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        align-items: end;
+      }
+      .builder-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .builder-label {
+        font-size: 0.7rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .builder-select, .builder-input {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 8px;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        outline: none;
+      }
+      .builder-select:focus, .builder-input:focus {
+        border-color: var(--accent4);
+      }
+      .builder-result-area {
+        margin-top: 20px;
+        padding: 15px;
+        background: var(--code-bg);
+        border: 2px dashed var(--accent4);
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
 
       /* ── GRID ── */
@@ -296,6 +399,11 @@
       </div>
       <span class="badge">CSS3 · 2025</span>
     </header>
+
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="mainSearch" class="search-input" placeholder="Cerca selettore o descrizione (es. 'figlio', 'attributo', 'not')..." />
+    </div>
 
     <div class="grid">
       <!-- ① SELETTORI DI BASE -->
@@ -754,6 +862,66 @@
         </div>
       </div>
 
+      <!-- ⑨ SELECTOR BUILDER (GUIDATO) -->
+      <div class="card grid-2">
+        <div class="card-header">
+          <div class="dot" style="background: #818cf8"></div>
+          <h2 style="color: #818cf8">Selector Builder (Costruttore Guidato)</h2>
+        </div>
+        <div class="card-body">
+          <div class="builder-grid">
+            <!-- Parte 1 -->
+            <div class="builder-field">
+              <span class="builder-label">Elemento A</span>
+              <select id="buildType1" class="builder-select">
+                <option value="tag">Tag (es. div)</option>
+                <option value="class">Classe (es. .btn)</option>
+                <option value="id">ID (es. #main)</option>
+              </select>
+              <input type="text" id="buildVal1" class="builder-input" placeholder="valore...">
+            </div>
+
+            <!-- Relazione -->
+            <div class="builder-field">
+              <span class="builder-label">Relazione</span>
+              <select id="buildRel" class="builder-select">
+                <option value="and">E anche (AND / Composto)</option>
+                <option value="child">Figlio diretto ( > )</option>
+                <option value="desc">Discendente (spazio)</option>
+                <option value="adj">Fratello adiacente ( + )</option>
+                <option value="sib">Fratello generico ( ~ )</option>
+              </select>
+            </div>
+
+            <!-- Parte 2 -->
+            <div class="builder-field">
+              <span class="builder-label">Elemento B</span>
+              <select id="buildType2" class="builder-select">
+                <option value="tag">Tag</option>
+                <option value="class">Classe</option>
+                <option value="id">ID</option>
+              </select>
+              <input type="text" id="buildVal2" class="builder-input" placeholder="valore...">
+            </div>
+
+          </div>
+
+          <div class="builder-result-area">
+            <div>
+              <span class="builder-label" style="display: block; margin-bottom: 5px;">Selettore Generato:</span>
+              <code id="generatedSelector" style="font-size: 1.4rem; background: transparent; padding: 0;">...</code>
+            </div>
+            <button id="copyGenerated" class="badge" style="background: var(--accent); color: #000; border: none; cursor: pointer;">Copia</button>
+          </div>
+          
+          <div style="margin-top: 15px; font-size: 0.8rem; color: var(--muted); font-family: 'JetBrains Mono', monospace;">
+            <strong>Esempi:</strong><br>
+            • <em>Tag + Classe (AND):</em> Elemento A: tag (div), Relazione: AND, Elemento B: classe (box) &rarr; <code>div.box</code><br>
+            • <em>Classe > Tag (Figlio):</em> Elemento A: classe (menu), Relazione: Figlio, Elemento B: tag (li) &rarr; <code>.menu > li</code>
+          </div>
+        </div>
+      </div>
+
       <!-- ⑧ SPECIFICITÀ -->
       <div class="card">
         <div class="card-header">
@@ -797,8 +965,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- /grid -->
 
     <footer>
       <span>CSS SELECTORS CHEAT SHEET · Tutti i selettori CSS3 e Living Standard</span>
